@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/biemch/biem-cli/compare/1.1.1...1.1.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* fix dependencies in package.json ([d1949da](https://github.com/biemch/biem-cli/commit/d1949dad0f72d7a93b328427f24259049f70a93d))
+
+
+
 ## [1.1.1](https://github.com/biemch/biem-cli/compare/1.1.0...1.1.1) (2024-12-30)
 
 
