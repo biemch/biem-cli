@@ -41,4 +41,4 @@ Commands:
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/biemch/biem-eslint-config/blob/master/LICENSE.md) for more details.
+Distributed under the MIT License. See [LICENSE](https://github.com/biemch/biem-cli/blob/master/LICENSE.md) for more details.
