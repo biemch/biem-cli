@@ -6,16 +6,10 @@ The Biem CLI is a command-line interface tailored for the Biem Digital Signage C
 
 ## Installation
 
-To install **@biem/cli** globally:
+To install `@biem/cli` globally:
 
-### Using npm:
 ```bash
 npm install -g @biem/cli
-```
-
-### Using Yarn:
-```bash
-yarn global add @biem/cli
 ```
 
 ---
@@ -48,4 +42,3 @@ Commands:
 ## License
 
 Distributed under the MIT License. See [LICENSE](https://github.com/biemch/biem-eslint-config/blob/master/LICENSE.md) for more details.
-
