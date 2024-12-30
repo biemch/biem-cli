@@ -1,3 +1,12 @@
+## [1.1.3](https://github.com/biemch/biem-cli/compare/1.1.2...1.1.3) (2024-12-30)
+
+
+### Bug Fixes
+
+* add repository, homepage, and bugs fields to package.json ([b969441](https://github.com/biemch/biem-cli/commit/b9694414c5d4f70e669e5020d3abd4411e314d7b))
+
+
+
 ## [1.1.2](https://github.com/biemch/biem-cli/compare/1.1.1...1.1.2) (2024-12-30)
 
 
