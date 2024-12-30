@@ -1,0 +1,50 @@
+@import 'modern-normalize/modern-normalize.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'inter-variable';
+  src: url('./asset/font/inter-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root {
+  --font-family: 'inter-variable', sans-serif;
+  --font-weight: 400;
+  --font-size: 21px;
+  --background-color: 0 0% 5%;
+  --text-color: 0 0% 95%;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  color: hsl(var(--text-color));
+  background-color: hsl(var(--background-color));
+
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;  
+}

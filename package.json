@@ -1,0 +1,47 @@
+{
+  "name": "@biem/cli",
+  "description": "Biem command line interface",
+  "version": "1.0.0",
+  "author": "Michael Freund <michael@biem.ch>",
+  "bin": {
+    "biem": "dist/index.js"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.2.0",
+    "commander": "^12.1.0",
+    "cpx2": "^8.0.0",
+    "ora": "^8.1.1"
+  },
+  "devDependencies": {
+    "@biem/eslint-config": "^2.1.5",
+    "@biem/template-utils": "^1.2.3",
+    "@types/node": "^20.12.0",
+    "eslint": "^9.17.0",
+    "nodemon": "^3.1.9",
+    "nunjucks": "^3.2.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6"
+  },
+  "engines": {
+    "node": ">=20.12"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn clean && tsc && cpx \"src/template/**/*\" dist/template",
+    "clean": "rimraf dist",
+    "cli:install": "npm link",
+    "cli:uninstall": "npm unlink -g",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'yarn tsx' src/index.ts",
+    "lint": "yarn typecheck && yarn eslint ./src",
+    "prepublishOnly": "yarn build",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module"
+}

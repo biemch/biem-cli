@@ -1,0 +1,55 @@
+{
+  "name": "{{ name }}",
+  "description": "{{ description }}",
+  "version": "{{ version }}",
+  "template": {
+    "fieldList": [
+      {
+        "name": "headline",
+        "label": "Headline",
+        "type": "text",
+        "placeholder": "Überschrift"
+      },
+      {
+        "name": "paragraph",
+        "label": "Paragraph",
+        "type": "markup",
+        "placeholder": "Paragraph"
+      },
+      {
+        "name": "image",
+        "label": "Image",
+        "type": "image"
+      },
+      {
+        "name": "features",
+        "label": "Features",
+        "type": "text",
+        "mutiple": true
+      }
+    ],
+    "defaults": {
+      "headline": "Rethink Digital Signage Today.",
+      "paragraph": "Maximieren Sie die Effizienz Ihrer Botschaften durch präzise Analyse der Kundeninteraktion in Echtzeit.",
+      "image": "/image.jpg",
+      "features": [
+        {
+          "title": "Viewing Direction",
+          "value": "Intelligente Analyse der Kundeninteraktion."
+        },
+        {
+          "title": "Audience Analytics",
+          "value": "Zielgruppenanalyse für Marketingstrategien."
+        },
+        {
+          "title": "Flow Analytics",
+          "value": "Besucherstromanalyse zur Raumoptimierung."
+        },
+        {
+          "title": "Performance Insights",
+          "value": "Leistungsanalyse für Digital Signage Inhalte."
+        }
+      ]
+    }
+  }
+}
