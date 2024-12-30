@@ -33,6 +33,9 @@
     "dist"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "yarn clean && tsc && cpx \"src/template/**/*\" dist/template",
     "clean": "rimraf dist",
