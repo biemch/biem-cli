@@ -27,12 +27,27 @@ export default function App() {
 					/>
 				</div>
 				<div className="grid grid-cols-2 gap-8">
-					{values.features.map((feature, index) => (
-						<div key={index} className="space-y-2">
-							<h2 className="text-lg font-bold">{feature.title}</h2>
-							<p className="opacity-60">{feature.value}</p>
-						</div>
-					))}
+
+					<div className="space-y-2">
+						<h2 className="text-lg font-bold">Viewing Direction</h2>
+						<p className="opacity-60">{values.feature_viewing_direction}</p>
+					</div>
+
+					<div className="space-y-2">
+						<h2 className="text-lg font-bold">Audience Analytics</h2>
+						<p className="opacity-60">{values.feature_audience_analytics}</p>
+					</div>
+
+					<div className="space-y-2">
+						<h2 className="text-lg font-bold">Flow Analytics</h2>
+						<p className="opacity-60">{values.feature_flow_analytics}</p>
+					</div>
+
+					<div className="space-y-2">
+						<h2 className="text-lg font-bold">Performance Inisights</h2>
+						<p className="opacity-60">{values.feature_performance_insights}</p>
+					</div>
+
 				</div>
 
 			</div>

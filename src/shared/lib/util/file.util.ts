@@ -1,4 +1,13 @@
-import fs from 'node:fs';
+import {
+	copyFileSync,
+	existsSync,
+	mkdirSync,
+	readdirSync,
+	readFileSync,
+	rmSync,
+	statSync,
+	writeFileSync,
+} from 'node:fs';
 import {
 	dirname,
 	join,
@@ -18,39 +27,43 @@ export const getPkgRootDirectory = () => {
 	return dirname(dirname(dirname(currentFilePath)));
 };
 
+export const pathExists = (path: string) => {
+	return existsSync(path);
+};
+
 export const ensureDirectoryExists = (directory: string) => {
-	if (!fs.existsSync(directory)) {
-		fs.mkdirSync(directory, {
+	if (!pathExists(directory)) {
+		mkdirSync(directory, {
 			recursive: true,
 		});
 	}
 };
 
 export const readFile = (file: string, encoding: BufferEncoding = 'utf8') => {
-	return fs.readFileSync(file, encoding);
+	return readFileSync(file, encoding);
 };
 
 export const copyFile = (source: string, destination: string) => {
-	fs.copyFileSync(source, destination);
+	copyFileSync(source, destination);
 };
 
 export const writeFile = (destination: string, content: string) => {
-	fs.writeFileSync(destination, content);
+	writeFileSync(destination, content);
 };
 
 export const removeDirectory = (directory: string) => {
-	if (fs.existsSync(directory)) {
-		fs.rmSync(directory, {
+	if (existsSync(directory)) {
+		rmSync(directory, {
 			recursive: true, force: true,
 		});
 	}
 };
 
 export const getDirectoryContents = (directory: string = process.cwd(), arrayOfFiles: string[] = []) => {
-	const files =	fs.readdirSync(directory);
+	const files =	readdirSync(directory);
 
 	files.forEach((file) => {
-		if (fs.statSync(`${directory}/${file}`).isDirectory()) {
+		if (statSync(`${directory}/${file}`).isDirectory()) {
 			arrayOfFiles = getDirectoryContents(`${directory}/${file}`, arrayOfFiles);
 		}
 		else {
