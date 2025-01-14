@@ -122,7 +122,7 @@ program
 			/**
 			 * authentication
 			 */
-			const authenticationTaskList = new Listr<CreateTemplateCtx>([
+			const authenticationTaskList = new Listr([
 				{
 					title: 'Authentication',
 					task: async (ctx, task): Promise<Listr> => task.newListr([
@@ -209,7 +209,7 @@ program
 			/**
 			 * deployment
 			 */
-			const deploymentTaskList = new Listr<CreateTemplateCtx>([
+			const deploymentTaskList = new Listr([
 				{
 					title: 'Deployment',
 					task: async (ctx, task): Promise<Listr> => task.newListr([
