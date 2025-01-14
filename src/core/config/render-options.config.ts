@@ -5,7 +5,7 @@ import {
 } from 'listr2';
 
 export const rendererOptions = {
-	collapseSubtasks: false,
+	collapseSubtasks: true,
 	icon: {
 		[ListrDefaultRendererLogLevels.WAITING]: figures.pointerSmall,
 		[ListrDefaultRendererLogLevels.COMPLETED_WITH_FAILED_SISTER_TASKS]: figures.pointerSmall,
