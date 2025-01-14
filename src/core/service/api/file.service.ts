@@ -1,6 +1,6 @@
 import { openAsBlob } from 'node:fs';
 
-import { File } from '../../shared/model/file.model.js';
+import { File } from '../../../shared/model/file.model.js';
 import { ApiService } from './api.service.js';
 
 export type CreateFileRequestBodyDto = {

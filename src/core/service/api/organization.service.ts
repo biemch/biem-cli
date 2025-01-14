@@ -1,4 +1,4 @@
-import { Organization } from '../../shared/model/organization.model.js';
+import { Organization } from '../../../shared/model/organization.model.js';
 import { ApiService } from './api.service.js';
 
 type GetOrganizationResponseBodyDto = {

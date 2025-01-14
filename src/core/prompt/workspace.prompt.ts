@@ -6,7 +6,7 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { WorkspaceService } from '../../core/service/workspace.service.js';
+import { WorkspaceService } from '../../core/service/api/workspace.service.js';
 import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
 import { Workspace } from '../../shared/model/workspace.model.js';
 

@@ -1,4 +1,4 @@
-import { ApiError } from '../../shared/error/api.error.js';
+import { ApiError } from '../../../shared/error/api.error.js';
 
 export class ApiService {
 	#baseUrl: string;

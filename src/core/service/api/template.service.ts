@@ -1,4 +1,4 @@
-import { Template } from '../../shared/model/template.model.js';
+import { Template } from '../../../shared/model/template.model.js';
 import { ApiService } from './api.service.js';
 
 export type CreateTemplateRequestBodyDto = Pick<

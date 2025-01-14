@@ -6,7 +6,7 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { TemplateService } from '../../core/service/template.service.js';
+import { TemplateService } from '../../core/service/api/template.service.js';
 import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
 import { Template } from '../../shared/model/template.model.js';
 

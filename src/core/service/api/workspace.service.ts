@@ -1,4 +1,4 @@
-import { Workspace } from '../../shared/model/workspace.model.js';
+import { Workspace } from '../../../shared/model/workspace.model.js';
 import { ApiService } from './api.service.js';
 
 type GetWorkspaceResponseBodyDto = {

@@ -1,13 +1,13 @@
 import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
 import { DeploymentType } from '../../shared/enum/deployment-type.enum.js';
-import { ConfigService } from './config.service.js';
-import { FileService } from './file.service.js';
+import { FileService } from './api/file.service.js';
 import {
 	CreateTemplateRequestBodyDto,
 	CreateTemplateResponseDto,
 	TemplateService,
 	UpdateTemplateResponseDto,
-} from './template.service.js';
+} from './api/template.service.js';
+import { ConfigService } from './config.service.js';
 
 export class DeploymentService {
 	constructor(

@@ -6,7 +6,7 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { OrganizationService } from '../../core/service/organization.service.js';
+import { OrganizationService } from '../../core/service/api/organization.service.js';
 import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
 import { Organization } from '../../shared/model/organization.model.js';
 
