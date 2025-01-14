@@ -6,7 +6,7 @@ import { TaskError } from '../../shared/error/task.error.js';
 import { sleep } from '../../shared/lib/util/sleep.util.js';
 
 export class TaskService {
-	public async run<T>(task: () => Promise<T>, delay: number = 250): Promise<T> {
+	public async run<T>(task: () => Promise<T>, delay: number = 150): Promise<T> {
 		await this.convienceDelay(delay);
 
 		try {
@@ -27,7 +27,7 @@ export class TaskService {
 		}
 	}
 
-	private convienceDelay(wait: number = 500): Promise<unknown> {
+	private convienceDelay(wait: number): Promise<unknown> {
 		return sleep(wait);
 	}
 }
