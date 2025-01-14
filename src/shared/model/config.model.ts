@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const ConfigSchema = z.object({
 	name: z.string(),
 	description: z.string(),
-	version: z.string(),
+	version: z.string().regex(/^\d+\.\d+\.\d+$/),
 	cover: z.string(),
 	template: z.object({
 		fieldList: z.array(
