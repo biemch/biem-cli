@@ -1,4 +1,5 @@
 import { ApiError } from '../../../shared/error/api.error.js';
+import { maskSensitiveData } from '../../../shared/lib/util/object.util.js';
 
 export class ApiService {
 	#baseUrl: string;
@@ -42,15 +43,16 @@ export class ApiService {
 		});
 
 		if (!response.ok) {
-			const errorDetails = await response.json().catch(() => null);
-			const errorMessage = errorDetails?.message || response.statusText || 'An unknown error occurred';
+			const errorBody = maskSensitiveData(body as unknown as Record<string, unknown>);
+			const errorResponse = await response.json().catch(() => null);
+			const errorMessage = errorResponse?.message || response.statusText || 'An unknown error occurred';
 			const statusCode = response.status;
 
 			throw new ApiError(errorMessage, statusCode, {
 				endpoint,
 				method,
-				body,
-				response: errorDetails,
+				body: errorBody,
+				response: errorResponse,
 			});
 		}
 
