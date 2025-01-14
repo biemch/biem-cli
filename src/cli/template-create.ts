@@ -12,7 +12,7 @@ import {
 	copyFile,
 	ensureDirectoryExists,
 	getDirectoryContents,
-	getPkgRootDirectory,
+	getTemplateDirectory,
 	readFile,
 	writeFile,
 } from '../shared/lib/util/file.util.js';
@@ -37,8 +37,7 @@ async function copyTemplateFiles(template: string, directory: string, placeholde
 
 	ensureDirectoryExists(output);
 
-	const pkgRootDirectory = getPkgRootDirectory();
-	const templateDirectory = path.join(pkgRootDirectory, 'template', template);
+	const templateDirectory = getTemplateDirectory();
 	const directoryContents = getDirectoryContents(templateDirectory);
 
 	const logger = ora({
@@ -148,10 +147,10 @@ program
 
 			await copyTemplateFiles(template, directory, placeholders);
 
-			console.log('\nNext steps:\n');
-			console.log(`\t1. cd ${directory}`);
-			console.log('\t2. yarn install (or npm install)');
-			console.log('\t3. yarn dev (or npm run dev)');
+			console.log('\nNext steps:');
+			console.log(`  1. cd ${directory}`);
+			console.log('  2. yarn install (or npm install)');
+			console.log('  3. yarn dev (or npm run dev)');
 		}
 		catch (err) {
 			console.error(err instanceof Error ? err.message : String(err));

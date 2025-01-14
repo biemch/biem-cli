@@ -9,8 +9,8 @@ import {
 	writeFileSync,
 } from 'node:fs';
 import {
-	dirname,
 	join,
+	resolve,
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -22,9 +22,12 @@ export const getHomeDirectory = () => {
 	return process.env.USERPROFILE || process.env.HOME;
 };
 
-export const getPkgRootDirectory = () => {
-	const currentFilePath = fileURLToPath(import.meta.url);
-	return dirname(dirname(dirname(currentFilePath)));
+export const getTemplateDirectory = () => {
+	return resolve(
+		fileURLToPath(import.meta.url),
+		'../../../..',
+		`template`,
+	);
 };
 
 export const pathExists = (path: string) => {
