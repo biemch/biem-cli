@@ -37,18 +37,30 @@ program
 	.action(async (directory) => {
 		try {
 			/**
-			 * base services
+			 * service initialization
 			 */
 			const taskService = new TaskService();
 			const configService = new ConfigService(directory);
 			const validationService = new ValidationService();
+			const apiService = new ApiService(configService.env.URL);
+			const authService = new AuthService(apiService);
+			const deploymentScopePrompt = new DeploymentScopePrompt();
+			const organizationService = new OrganizationService(apiService);
+			const organizationPrompt = new OrganizationPrompt(organizationService);
+			const workspaceService = new WorkspaceService(apiService);
+			const workspacePrompt = new WorkspacePrompt(workspaceService);
+			const deploymentTypePrompt = new DeploymentTypePrompt();
+			const templateService = new TemplateService(apiService);
+			const templatePrompt = new TemplatePrompt(templateService);
+			const fileService = new FileService(apiService);
+			const deploymentService = new DeploymentService(configService, templateService, fileService);
 
 			/**
-			 * setup validation
+			 * validation
 			 */
-			const setupValidationPromptList = new Listr([
+			const validationTaskList = new Listr([
 				{
-					title: 'Validating setup',
+					title: 'Validation',
 					task: async (_, task): Promise<Listr> => task.newListr([
 						{
 							title: 'Source directory',
@@ -86,22 +98,6 @@ program
 								() => validationService.validatePath(configService.coverFile),
 							),
 						},
-					]),
-				},
-			], {
-				concurrent: false,
-				rendererOptions,
-			});
-
-			await setupValidationPromptList.run();
-
-			/**
-			 * config validation
-			 */
-			const configValidationPromptList = new Listr([
-				{
-					title: 'Validating config',
-					task: async (_, task): Promise<Listr> => task.newListr([
 						{
 							title: 'Project config',
 							task: () => taskService.run(
@@ -121,38 +117,41 @@ program
 				rendererOptions,
 			});
 
-			await configValidationPromptList.run();
-
-			/**
-			 * deployment services
-			 */
-			const apiService = new ApiService(configService.env.URL);
-			const authService = new AuthService(apiService);
-			const deploymentScopePrompt = new DeploymentScopePrompt();
-			const organizationService = new OrganizationService(apiService);
-			const organizationPrompt = new OrganizationPrompt(organizationService);
-			const workspaceService = new WorkspaceService(apiService);
-			const workspacePrompt = new WorkspacePrompt(workspaceService);
-			const deploymentTypePrompt = new DeploymentTypePrompt();
-			const templateService = new TemplateService(apiService);
-			const templatePrompt = new TemplatePrompt(templateService);
-			const fileService = new FileService(apiService);
-			const deploymentService = new DeploymentService(configService, templateService, fileService);
+			await validationTaskList.run();
 
 			/**
 			 * authentication
 			 */
-			await authService.login({
-				email: configService.env.EMAIL,
-				password: configService.env.PASSWORD,
+			const authenticationTaskList = new Listr<CreateTemplateCtx>([
+				{
+					title: 'Authentication',
+					task: async (ctx, task): Promise<Listr> => task.newListr([
+						{
+							title: 'Authenticating user',
+							task: async () => {
+								await taskService.run(
+									() => authService.login({
+										email: configService.env.EMAIL,
+										password: configService.env.PASSWORD,
+									}), 500,
+								);
+							},
+						},
+					]),
+				},
+			], {
+				concurrent: false,
+				rendererOptions,
 			});
 
+			await authenticationTaskList.run();
+
 			/**
-			 * deployment
+			 * configuration
 			 */
-			const deploymentPromptList = new Listr<CreateTemplateCtx>([
+			const configurationTaskList = new Listr<CreateTemplateCtx>([
 				{
-					title: 'Deployment config',
+					title: 'Configuration',
 					task: async (ctx, task): Promise<Listr> => task.newListr([
 						{
 							title: 'Select deployment type',
@@ -205,8 +204,34 @@ program
 				rendererOptions,
 			});
 
-			const deploymentPromptListAnswers = await deploymentPromptList.run();
-			await deploymentService.deploy(deploymentPromptListAnswers);
+			const configurationTaskListCtx = await configurationTaskList.run();
+
+			/**
+			 * deployment
+			 */
+			const deploymentTaskList = new Listr<CreateTemplateCtx>([
+				{
+					title: 'Deployment',
+					task: async (ctx, task): Promise<Listr> => task.newListr([
+						{
+							title: 'Deploying template',
+							task: async () => {
+								await taskService.run(
+									() => deploymentService.deploy(ctx), 500,
+								);
+							},
+						},
+					]),
+				},
+			], {
+				ctx: configurationTaskListCtx,
+				concurrent: false,
+				rendererOptions,
+			});
+
+			await deploymentTaskList.run();
+
+			console.log('\nTemplate deployed successfully.');
 		}
 		catch (error) {
 			handleError(error as unknown as Error);
