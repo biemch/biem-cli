@@ -125,7 +125,7 @@ program
 			const authenticationTaskList = new Listr([
 				{
 					title: 'Authentication',
-					task: async (ctx, task): Promise<Listr> => task.newListr([
+					task: async (_, task): Promise<Listr> => task.newListr([
 						{
 							title: 'Authenticating user',
 							task: async () => {
