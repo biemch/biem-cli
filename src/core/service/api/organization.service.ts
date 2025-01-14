@@ -15,7 +15,7 @@ export class OrganizationService {
 	async find(): Promise<GetOrganizationResponseBodyDto> {
 		return this.apiService.request<GetOrganizationResponseBodyDto>(
 			'GET',
-			'/api/cms/organizationx',
+			'/api/cms/organization',
 		);
 	}
 }
