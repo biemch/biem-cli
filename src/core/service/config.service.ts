@@ -3,14 +3,8 @@ import { join } from 'node:path';
 import dotenv from 'dotenv';
 
 import { readFile } from '../../shared/lib/util/file.util.js';
-import {
-	Config,
-	ConfigSchema,
-} from '../../shared/model/config.model.js';
-import {
-	Env,
-	EnvSchema,
-} from '../../shared/model/env.model.js';
+import { Config } from '../../shared/model/config.model.js';
+import { Env } from '../../shared/model/env.model.js';
 
 export class ConfigService {
 	private directory: string;
@@ -48,10 +42,10 @@ export class ConfigService {
 	}
 
 	get config(): Config {
-		return ConfigSchema.parse(JSON.parse(readFile(this.configFile, 'utf-8')));
+		return JSON.parse(readFile(this.configFile, 'utf-8'));
 	}
 
 	get env(): Env {
-		return EnvSchema.parse(dotenv.parse(readFile(this.envFile, 'utf-8')));
+		return dotenv.parse(readFile(this.envFile, 'utf-8'));
 	}
 }
