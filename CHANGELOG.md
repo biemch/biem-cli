@@ -1,4 +1,4 @@
-# [1.2.0](https://github.com/biemch/biem-cli/compare/1.1.3...1.2.0) (2025-01-17)
+## [1.2.1](https://github.com/biemch/biem-cli/compare/1.1.3...1.2.1) (2025-01-17)
 
 
 ### Bug Fixes
@@ -14,6 +14,7 @@
 
 ### Features
 
+* add code checkout step in release workflow and include CHANGELOG.md in package files ([562de41](https://github.com/biemch/biem-cli/commit/562de41220ef3a8853a1537877abfaacbf5f184a))
 * add object util ([f59bbaa](https://github.com/biemch/biem-cli/commit/f59bbaaa920906177769a00107e667fd68a7d099))
 * add release automation script and update commitizen configuration ([f84856e](https://github.com/biemch/biem-cli/commit/f84856ee13dcc8a64235a4e7baf04db6f16aec4f))
 * enable collapsing of subtasks in renderer options ([fc929c4](https://github.com/biemch/biem-cli/commit/fc929c423c0cd979724079ddb3a35ccefd979635))
