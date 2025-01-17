@@ -2,6 +2,7 @@
   "name": "{{ name }}",
   "description": "{{ description }}",
   "version": "{{ version }}",
+  "cover": "cover.jpg",
   "template": {
     "fieldList": [
       {
@@ -22,34 +23,38 @@
         "type": "image"
       },
       {
-        "name": "features",
-        "label": "Features",
+        "name": "feature_viewing_direction",
+        "label": "Viewing Direction",
         "type": "text",
-        "mutiple": true
+        "placeholder": "Viewing Direction"
+      },
+      {
+        "name": "feature_audience_analytics",
+        "label": "Audience Analytics",
+        "type": "text",
+        "placeholder": "Audience Analytics"
+      },
+      {
+        "name": "feature_flow_analytics",
+        "label": "Flow Analytics",
+        "type": "text",
+        "placeholder": "Flow Analytics"
+      },
+      {
+        "name": "feature_performance_insights",
+        "label": "Performance Insights",
+        "type": "text",
+        "placeholder": "Performance Insights"
       }
     ],
     "defaults": {
       "headline": "Rethink Digital Signage Today.",
       "paragraph": "Maximieren Sie die Effizienz Ihrer Botschaften durch präzise Analyse der Kundeninteraktion in Echtzeit.",
       "image": "/image.jpg",
-      "features": [
-        {
-          "title": "Viewing Direction",
-          "value": "Intelligente Analyse der Kundeninteraktion."
-        },
-        {
-          "title": "Audience Analytics",
-          "value": "Zielgruppenanalyse für Marketingstrategien."
-        },
-        {
-          "title": "Flow Analytics",
-          "value": "Besucherstromanalyse zur Raumoptimierung."
-        },
-        {
-          "title": "Performance Insights",
-          "value": "Leistungsanalyse für Digital Signage Inhalte."
-        }
-      ]
+      "feature_viewing_direction": "Intelligente Analyse der Kundeninteraktion.",
+      "feature_audience_analytics": "Zielgruppenanalyse für Marketingstrategien.",
+      "feature_flow_analytics": "Besucherstromanalyse zur Raumoptimierung.",
+      "feature_performance_insights": "Leistungsanalyse für Digital Signage Inhalte."
     }
   }
 }

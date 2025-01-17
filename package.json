@@ -10,19 +10,25 @@
   "dependencies": {
     "@biem/template-utils": "^1.2.3",
     "@inquirer/prompts": "^7.2.0",
+    "@listr2/prompt-adapter-inquirer": "^2.0.18",
+    "@sindresorhus/slugify": "^2.2.1",
+    "cli-table3": "^0.6.5",
     "commander": "^12.1.0",
     "cpx2": "^8.0.0",
-    "ora": "^8.1.1"
+    "dotenv": "^16.4.7",
+    "listr2": "^8.2.5",
+    "ora": "^8.1.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@biem/eslint-config": "^2.1.5",
     "@types/node": "^20.12.0",
     "eslint": "^9.17.0",
-    "nodemon": "^3.1.9",
     "nunjucks": "^3.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rimraf": "^6.0.1",
+    "tsc-watch": "^6.2.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vite": "^6.0.6"
@@ -44,7 +50,7 @@
     "clean": "rimraf dist",
     "cli:install": "npm link",
     "cli:uninstall": "npm unlink -g",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'yarn tsx' src/index.ts",
+    "dev": "wrap() { tsc-watch --onSuccess \"node ./dist/index.js ${1}\"; }; wrap",
     "lint": "yarn typecheck && yarn eslint ./src",
     "prepublishOnly": "yarn build",
     "typecheck": "tsc --noEmit"

@@ -12,11 +12,11 @@ import {
 	copyFile,
 	ensureDirectoryExists,
 	getDirectoryContents,
-	getPkgRootDirectory,
+	getTemplateDirectory,
 	readFile,
 	writeFile,
-} from '../lib/util/fs.js';
-import { sleep } from '../lib/util/sleep.js';
+} from '../shared/lib/util/file.util.js';
+import { sleep } from '../shared/lib/util/sleep.util.js';
 
 const PLACEHOLDER_FILES = [
 	'package.json',
@@ -28,7 +28,7 @@ const TEMPLATE_CHOICES = [
 	{
 		name: 'react-ts',
 		value: 'react-ts',
-		description: 'React + Typescript + Tailwindcss',
+		description: 'React + Typescript + TailwindCSS',
 	},
 ];
 
@@ -37,8 +37,7 @@ async function copyTemplateFiles(template: string, directory: string, placeholde
 
 	ensureDirectoryExists(output);
 
-	const pkgRootDirectory = getPkgRootDirectory();
-	const templateDirectory = path.join(pkgRootDirectory, 'template', template);
+	const templateDirectory = getTemplateDirectory();
 	const directoryContents = getDirectoryContents(templateDirectory);
 
 	const logger = ora({
@@ -80,7 +79,7 @@ program
 			const placeholders: Record<string, string> = {
 				name: 'react-ts',
 				version: '1.0.0',
-				description: 'React + Typescript + Tailwindcss',
+				description: 'React + Typescript + TailwindCSS',
 				author: '',
 				license: '',
 			};
@@ -98,6 +97,7 @@ program
 				default: placeholders.name as string,
 				validate: (value) => {
 					if (value.trim().length === 0) return 'Project name cannot be empty';
+					// eslint-disable-next-line max-len
 					if (!/^[a-z0-9-_]+$/.test(value)) return 'Project name can only contain lowercase letters, numbers, hyphens and underscores';
 					return true;
 				},
@@ -147,10 +147,10 @@ program
 
 			await copyTemplateFiles(template, directory, placeholders);
 
-			console.log('\nNext steps:\n');
-			console.log(`\t1. cd ${directory}`);
-			console.log('\t2. yarn install (or npm install)');
-			console.log('\t3. yarn dev (or npm run dev)');
+			console.log('\nNext steps:');
+			console.log(`  1. cd ${directory}`);
+			console.log('  2. yarn install (or npm install)');
+			console.log('  3. yarn dev (or npm run dev)');
 		}
 		catch (err) {
 			console.error(err instanceof Error ? err.message : String(err));
