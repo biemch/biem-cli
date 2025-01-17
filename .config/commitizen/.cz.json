@@ -1,0 +1,22 @@
+{
+  "commitizen": {
+    "name": "cz_customize",
+    "change_type_map": {
+      "feat": "Feature",
+      "fix": "Bug Fix",
+      "refactor": "Refactor",
+      "perf": "Performance",
+      "doc": "Documentation",
+      "revert": "Revert",
+      "BREAKING CHANGE": "BREAKING CHANGE"
+    },
+    "extras": {
+      "REPOSITORY": "biemch/biem-cli"
+    },
+    "customize": {
+      "commit_parser": "^((?P<change_type>feat|fix|refactor|perf|doc|revert|BREAKING CHANGE)(?:\\((?P<scope>[^()\\r\\n]*)\\)|\\()?(?P<breaking>!)?|\\w+!):\\s(?P<message>.*)?",
+      "changelog_pattern": "^((BREAKING[\\-\\ ]CHANGE|\\w+)(\\(.+\\))?!?):",
+      "change_type_order": ["BREAKING CHANGE", "Feature", "Bug Fix", "Refactor", "Performance", "Documentation", "Revert"]
+    }
+  }
+}
