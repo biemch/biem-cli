@@ -1,27 +1,45 @@
-## [1.1.2](https://github.com/biemch/biem-cli/compare/1.1.1...1.1.2) (2024-12-30)
+## Unreleased
 
+### Feature
 
-### Bug Fixes
+- improve release workflow ([c484da2](https://github.com/biemch/biem-cli/commit/c484da20e77e95d615cda286427646382b7a5624))
+- mask sensitive data in api error handling ([9c95973](https://github.com/biemch/biem-cli/commit/9c959734571f11e00039e64ddc012a25b31f72d2))
+- add object util ([f59bbaa](https://github.com/biemch/biem-cli/commit/f59bbaaa920906177769a00107e667fd68a7d099))
+- enable collapsing of subtasks in renderer options ([fc929c4](https://github.com/biemch/biem-cli/commit/fc929c423c0cd979724079ddb3a35ccefd979635))
+- implement template deploy command ([7fdb578](https://github.com/biemch/biem-cli/commit/7fdb578eba82379319002eaeb30ba32021e21fa7))
 
-* fix dependencies in package.json ([d1949da](https://github.com/biemch/biem-cli/commit/d1949dad0f72d7a93b328427f24259049f70a93d))
+### Bug Fix
 
+- update main branch name from 'main' to 'master' in release script ([c7e5479](https://github.com/biemch/biem-cli/commit/c7e547905b87aaa00f98b964b410d1452cc09e55))
+- rename unused parameter ctx in authentication task ([6d8a762](https://github.com/biemch/biem-cli/commit/6d8a7624eaf908bf886229287116e63cb9cab551))
+- do not parse/validate config twice ([f889f66](https://github.com/biemch/biem-cli/commit/f889f66073b64b77de28ee56688a3b8e0ddb9c8e))
+- enforce semantic versioning format for version field in config schema ([9ee1115](https://github.com/biemch/biem-cli/commit/9ee11151b3733c8e4ca52596422a25b559dcf36b))
+- remove generic type from authentication and deployment tasks ([89179a0](https://github.com/biemch/biem-cli/commit/89179a0a88b3e604dce089e81f9b6698e8f72b95))
+- reduce default delay in task execution and update method signature ([6fcad91](https://github.com/biemch/biem-cli/commit/6fcad91e90926137dcd6dc41a02fa3657294fa41))
+- URL typo in organization service ([adce26f](https://github.com/biemch/biem-cli/commit/adce26f83b9144f1c1a6dffa115f2e812ceee845))
+- adapt get template directory to new folder structure ([1e7af29](https://github.com/biemch/biem-cli/commit/1e7af2994c584e039002730d7e49954edd1d18ba))
+- add repository, homepage, and bugs fields to package.json ([b969441](https://github.com/biemch/biem-cli/commit/b9694414c5d4f70e669e5020d3abd4411e314d7b))
 
+### Refactor
 
-## [1.1.1](https://github.com/biemch/biem-cli/compare/1.1.0...1.1.1) (2024-12-30)
+- improve error handling ([23684e1](https://github.com/biemch/biem-cli/commit/23684e1ad76c506d04f9439d1e097cfc096d28a4))
+- improve service initialization and restructure validation, authentication, and deployment tasks ([da89c43](https://github.com/biemch/biem-cli/commit/da89c43862480ffd375acdf0c21aa69330af9432))
+- move api related services to api subfolder ([49e1117](https://github.com/biemch/biem-cli/commit/49e11177440a56d6d65255009ae308ba31988ed7))
 
+## 1.1.2 (2024-12-30)
 
-### Bug Fixes
+### Bug Fix
 
-* add publishConfig for public access in package.json ([ed745b0](https://github.com/biemch/biem-cli/commit/ed745b07025947b182d60b334c72f966db32134d))
+- fix dependencies in package.json ([d1949da](https://github.com/biemch/biem-cli/commit/d1949dad0f72d7a93b328427f24259049f70a93d))
 
+## 1.1.1 (2024-12-30)
 
+### Bug Fix
 
-# [1.1.0](https://github.com/biemch/biem-cli/compare/705d39a90cfea2fc76ca8ab38f368d6f8fae79fd...1.1.0) (2024-12-30)
+- add publishConfig for public access in package.json ([ed745b0](https://github.com/biemch/biem-cli/commit/ed745b07025947b182d60b334c72f966db32134d))
 
+## 1.1.0 (2024-12-30)
 
-### Features
+### Feature
 
-* initial commit ([705d39a](https://github.com/biemch/biem-cli/commit/705d39a90cfea2fc76ca8ab38f368d6f8fae79fd))
-
-
-
+- initial commit ([705d39a](https://github.com/biemch/biem-cli/commit/705d39a90cfea2fc76ca8ab38f368d6f8fae79fd))
