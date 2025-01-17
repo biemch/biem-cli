@@ -52,7 +52,7 @@ RELEASE_BRANCH="release/$VERSION"
 #
 # The name of the master branch, typically
 # used for production-ready code.
-MAIN_BRANCH="main"
+MAIN_BRANCH="master"
 
 ##################################################
 # CHECKS
