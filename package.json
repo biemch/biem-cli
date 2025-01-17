@@ -1,7 +1,7 @@
 {
   "name": "@biem/cli",
   "description": "Biem command line interface",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Michael Freund <michael@biem.ch>",
   "bin": {
     "biem": "dist/index.js"
@@ -37,7 +37,8 @@
     "node": ">=20.12"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "homepage": "https://github.com/biemch/biem-cli#readme",
   "license": "MIT",
