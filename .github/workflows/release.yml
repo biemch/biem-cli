@@ -1,36 +1,131 @@
-name: Releases
+name: Release
+
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*'
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           scope: '@octocat'
-      - run: yarn
-      - run: yarn lint
-  changelog:
-    runs-on: ubuntu-latest
+      - name: Install dependencies
+        run: yarn install
+      - name: Run linting
+        run: yarn lint
+
+  build:
+    runs-on: ubuntu-24.04
+    needs: lint
     steps:
-      - uses: actions/checkout@v4.2.2
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          tag-prefix: ''
-          github-token: ${{ secrets.PA_TOKEN }}
-          version-file: './package.json'
-      - name: create release
-        uses: elgohr/Github-Release-Action@v5
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+          node-version: '20.x'
+          scope: '@octocat'
+      - name: Install dependencies
+        run: yarn
+      - name: Build project
+        run: yarn build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  create-release:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install commitizen
+        run: |
+          sudo apt update
+          sudo apt install pipx
+          pipx install commitizen
+      - name: Generate release notes
+        run: |
+          cz \
+            --config .config/commitizen/.cz.json \
+            changelog \
+            --template .config/commitizen/changelog-template.j2 \
+            --file-name RELEASE_NOTES.md \
+            ${{ github.ref_name }}
+      - name: Create release
         env:
-          GITHUB_TOKEN: ${{ secrets.PA_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! gh release view ${{ github.ref_name }} &>/dev/null; then
+            gh release create ${{ github.ref_name }} \
+              --title "v${{ github.ref_name }}" \
+              --notes-file RELEASE_NOTES.md
+          else
+            echo "Release ${{ github.ref_name }} already exists"
+          fi
+
+  upload-assets:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    needs: create-release
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          tag: ${{ steps.changelog.outputs.tag }}
-          title: "v${{ steps.changelog.outputs.tag }}"
+          fetch-depth: 0
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Prepare release files
+        run: |
+          mkdir release
+          cp -r dist release/
+          cp CHANGELOG.md release/
+          cp LICENSE.md release/
+          cp README.md release/
+          cp package.json release/
+      - name: Create release archives
+        run: |
+          cd release
+          zip -r ../${{ github.ref_name }}.zip .
+          tar -czf ../${{ github.ref_name }}.tar.gz .
+      - name: Upload release archives
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ github.ref_name }} ${{ github.ref_name }}.zip --clobber
+          gh release upload ${{ github.ref_name }} ${{ github.ref_name }}.tar.gz --clobber
+
+  publish:
+    runs-on: ubuntu-24.04
+    needs: upload-assets
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn install
+      - run: yarn publish --new-version ${{ github.ref_name }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
