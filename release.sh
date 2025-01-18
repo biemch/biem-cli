@@ -98,7 +98,7 @@ git checkout -b $RELEASE_BRANCH $DEVELOP_BRANCH > /dev/null 2>&1
 npm version $VERSION --no-git-tag-version
 
 # Generate the changelog based on the conventional-changelog preset
-npx --yes conventional-changelog-cli -p angular -r 0 -i CHANGELOG.md -s
+cz --config .config/commitizen/.cz.json changelog --template .config/commitizen/changelog-template.j2 --file-name CHANGELOG.md --unreleased-version %VERSION%
 
 # Stage the changes to the version and changelog
 git add package.json CHANGELOG.md
