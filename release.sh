@@ -24,6 +24,7 @@
 # - Git installed and properly configured
 # - npm (for versioning)
 # - GitHub CLI (`gh`) installed and authenticated
+# - Commitizen CLI (`cz`) installed and configured
 
 ##################################################
 # CONFIGURATION
@@ -97,8 +98,8 @@ git checkout -b $RELEASE_BRANCH $DEVELOP_BRANCH > /dev/null 2>&1
 # Update the version number in the project configuration
 npm version $VERSION --no-git-tag-version
 
-# Generate the changelog based on the conventional-changelog preset
-cz --config .config/commitizen/.cz.json changelog --template .config/commitizen/changelog-template.j2 --file-name CHANGELOG.md --unreleased-version %VERSION%
+# Generate the changelog based using the commitizen tool
+cz --config .config/commitizen/.cz.json changelog --template .config/commitizen/changelog-template.j2 --file-name CHANGELOG.md --incremental --unreleased-version $VERSION
 
 # Stage the changes to the version and changelog
 git add package.json CHANGELOG.md
