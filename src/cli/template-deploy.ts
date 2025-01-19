@@ -42,18 +42,6 @@ program
 			const taskService = new TaskService();
 			const configService = new ConfigService(directory);
 			const validationService = new ValidationService();
-			const apiService = new ApiService(configService.env.URL);
-			const authService = new AuthService(apiService);
-			const deploymentScopePrompt = new DeploymentScopePrompt();
-			const organizationService = new OrganizationService(apiService);
-			const organizationPrompt = new OrganizationPrompt(organizationService);
-			const workspaceService = new WorkspaceService(apiService);
-			const workspacePrompt = new WorkspacePrompt(workspaceService);
-			const deploymentTypePrompt = new DeploymentTypePrompt();
-			const templateService = new TemplateService(apiService);
-			const templatePrompt = new TemplatePrompt(templateService);
-			const fileService = new FileService(apiService);
-			const deploymentService = new DeploymentService(configService, templateService, fileService);
 
 			/**
 			 * validation
@@ -118,6 +106,22 @@ program
 			});
 
 			await validationTaskList.run();
+
+			/**
+			 * service initialization
+			 */
+			const apiService = new ApiService(configService.env.URL);
+			const authService = new AuthService(apiService);
+			const deploymentScopePrompt = new DeploymentScopePrompt();
+			const organizationService = new OrganizationService(apiService);
+			const organizationPrompt = new OrganizationPrompt(organizationService);
+			const workspaceService = new WorkspaceService(apiService);
+			const workspacePrompt = new WorkspacePrompt(workspaceService);
+			const deploymentTypePrompt = new DeploymentTypePrompt();
+			const templateService = new TemplateService(apiService);
+			const templatePrompt = new TemplatePrompt(templateService);
+			const fileService = new FileService(apiService);
+			const deploymentService = new DeploymentService(configService, templateService, fileService);
 
 			/**
 			 * authentication
