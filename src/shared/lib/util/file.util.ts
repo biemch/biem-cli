@@ -22,11 +22,12 @@ export const getHomeDirectory = () => {
 	return process.env.USERPROFILE || process.env.HOME;
 };
 
-export const getTemplateDirectory = () => {
+export const getTemplateDirectory = (name: string) => {
 	return resolve(
 		fileURLToPath(import.meta.url),
 		'../../../..',
 		`template`,
+		name,
 	);
 };
 

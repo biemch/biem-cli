@@ -32,12 +32,12 @@ const TEMPLATE_CHOICES = [
 	},
 ];
 
-async function copyTemplateFiles(template: string, directory: string, placeholders: Record<string, string>) {
+async function copyTemplateFiles(name: string, directory: string, placeholders: Record<string, string>) {
 	const output = directory.startsWith('/') ? directory : path.join(process.cwd(), directory);
 
 	ensureDirectoryExists(output);
 
-	const templateDirectory = getTemplateDirectory();
+	const templateDirectory = getTemplateDirectory(name);
 	const directoryContents = getDirectoryContents(templateDirectory);
 
 	const logger = ora({
