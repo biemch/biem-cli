@@ -1,19 +1,19 @@
 import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
 import { DeploymentType } from '../../shared/enum/deployment-type.enum.js';
-import { FileService } from './api/file.service.js';
+import { FileApiService } from './api/file.api.service.js';
 import {
 	CreateTemplateRequestBodyDto,
 	CreateTemplateResponseDto,
-	TemplateService,
+	TemplateApiService,
 	UpdateTemplateResponseDto,
-} from './api/template.service.js';
+} from './api/template.api.service.js';
 import { ConfigService } from './config.service.js';
 
 export class DeploymentService {
 	constructor(
 		private configService: ConfigService,
-		private templateService: TemplateService,
-		private fileService: FileService,
+		private templateApiService: TemplateApiService,
+		private fileApiService: FileApiService,
 	) {}
 
 	private createDeploymentPayload(ctx: CreateTemplateCtx): CreateTemplateRequestBodyDto {
@@ -31,13 +31,13 @@ export class DeploymentService {
 	}
 
 	async deploy(ctx: CreateTemplateCtx): Promise<CreateTemplateResponseDto | UpdateTemplateResponseDto | void> {
-		const fileResponse = await this.fileService.upload(this.configService.coverFile, this.configService.config.cover);
+		const fileResponse = await this.fileApiService.upload(this.configService.coverFile, this.configService.config.cover);
 		const deploymentPayload = this.createDeploymentPayload({ ...ctx, coverId: fileResponse.file.id });
 
 		if (ctx.templateId && ctx.deploymentType === DeploymentType.UPDATE) {
-			return this.templateService.update(ctx.templateId, deploymentPayload);
+			return this.templateApiService.update(ctx.templateId, deploymentPayload);
 		} else {
-			return await this.templateService.create(deploymentPayload);
+			return await this.templateApiService.create(deploymentPayload);
 		}
 	}
 }

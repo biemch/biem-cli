@@ -1,5 +1,5 @@
 import { Template } from '../../../shared/model/template.model.js';
-import { ApiService } from './api.service.js';
+import { CoreApiService } from './core.api.service.js';
 
 export type CreateTemplateRequestBodyDto = Pick<
 	Template, 'name' | 'description' | 'version' | 'markup' | 'workspaceId' | 'organizationId' | 'fieldList' | 'coverId'
@@ -21,15 +21,15 @@ export type UpdateTemplateResponseDto = {
 	bookingTemplate: Template;
 };
 
-export class TemplateService {
-	private apiService: ApiService;
+export class TemplateApiService {
+	private coreApiService: CoreApiService;
 
-	constructor(apiService: ApiService) {
-		this.apiService = apiService;
+	constructor(coreApiService: CoreApiService) {
+		this.coreApiService = coreApiService;
 	}
 
 	async create(data: CreateTemplateRequestBodyDto): Promise<CreateTemplateResponseDto> {
-		return this.apiService.request<CreateTemplateResponseDto>(
+		return this.coreApiService.request<CreateTemplateResponseDto>(
 			'POST',
 			'/api/cms/booking-template',
 			data,
@@ -37,14 +37,14 @@ export class TemplateService {
 	}
 
 	async find(): Promise<GetTemplateResponseDto> {
-		return this.apiService.request<GetTemplateResponseDto>(
+		return this.coreApiService.request<GetTemplateResponseDto>(
 			'GET',
 			'/api/cms/booking-template',
 		);
 	}
 
 	async update(id: Template['id'], data: UpdateTemplateRequestBodyDto): Promise<UpdateTemplateResponseDto> {
-		return this.apiService.request<UpdateTemplateResponseDto>(
+		return this.coreApiService.request<UpdateTemplateResponseDto>(
 			'POST',
 			`/api/cms/booking-template/${id}`,
 			data,

@@ -6,15 +6,15 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { OrganizationService } from '../../core/service/api/organization.service.js';
 import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
 import { Organization } from '../../shared/model/organization.model.js';
+import { OrganizationApiService } from '../service/api/organization.api.service.js';
 
 export class OrganizationPrompt {
-	private organizationService: OrganizationService;
+	private organizationApiService: OrganizationApiService;
 
-	constructor(organizationService: OrganizationService) {
-		this.organizationService = organizationService;
+	constructor(organizationApiService: OrganizationApiService) {
+		this.organizationApiService = organizationApiService;
 	}
 
 	public async ask(
@@ -24,7 +24,7 @@ export class OrganizationPrompt {
       typeof SimpleRenderer
 		>,
 	): Promise<Organization['id']> {
-		const { organizationList } = await this.organizationService.find();
+		const { organizationList } = await this.organizationApiService.find();
 
 		return task.prompt(ListrInquirerPromptAdapter).run(select, {
 			message: 'Select organization',
