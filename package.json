@@ -14,7 +14,6 @@
     "@sindresorhus/slugify": "^2.2.1",
     "cli-table3": "^0.6.5",
     "commander": "^12.1.0",
-    "cpx2": "^8.0.0",
     "dotenv": "^16.4.7",
     "listr2": "^8.2.5",
     "ora": "^8.1.1",
@@ -23,6 +22,7 @@
   "devDependencies": {
     "@biem/eslint-config": "^2.1.5",
     "@types/node": "^20.12.0",
+    "cpy-cli": "^5.0.0",
     "eslint": "^9.17.0",
     "nunjucks": "^3.2.4",
     "react": "^18.3.1",
@@ -47,7 +47,7 @@
   },
   "repository": "biemch/biem-cli.git",
   "scripts": {
-    "build": "yarn clean && tsc && cpx \"src/template/**/*\" dist/template",
+    "build": "yarn clean && tsc && cpy \"src/template/**/*\" dist/template",
     "clean": "rimraf dist",
     "cli:install": "npm link",
     "cli:uninstall": "npm unlink -g",
