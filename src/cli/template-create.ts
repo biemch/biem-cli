@@ -45,7 +45,7 @@ program
 										task,
 										ctx.preset.name,
 										3,
-										24,
+										64,
 									),
 								);
 							},
@@ -59,7 +59,7 @@ program
 										task,
 										ctx.preset.description,
 										3,
-										128,
+										256,
 									),
 								);
 							},
@@ -81,7 +81,7 @@ program
 										task,
 										undefined,
 										3,
-										24,
+										64,
 									),
 								);
 							},
