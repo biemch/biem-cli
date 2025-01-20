@@ -17,8 +17,9 @@ export class InputPrompt {
 		defaultValue?: string,
 		minLength?: number,
 		maxLength?: number,
+		slugify?: boolean,
 	): Promise<string> {
-		const validate = (minLength || maxLength)
+		const validate = (minLength || maxLength || slugify)
 			? (value: string) => {
 				if (minLength && value.length < minLength) {
 					return `Minimum length is ${minLength}`;
@@ -26,6 +27,10 @@ export class InputPrompt {
 
 				if (maxLength && value.length > maxLength) {
 					return `Maximum length is ${maxLength}`;
+				}
+
+				if (slugify && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) {
+					return 'Value must be lowercase letters, numbers, and hyphens only';
 				}
 
 				return true;
