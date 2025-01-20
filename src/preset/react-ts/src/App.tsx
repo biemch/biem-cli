@@ -3,7 +3,7 @@ import './App.scss';
 import { useTemplateValue } from '@biem/template-utils';
 
 import Biem from './asset/img/biem.svg?react';
-import { Values } from './types.js';
+import { Values } from './types';
 
 export default function App() {
 	const values = useTemplateValue<Values>();
