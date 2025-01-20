@@ -6,13 +6,13 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
+import { DeployTemplateCtx } from '../../shared/ctx/deploy-template.ctx.js';
 import { DeploymentScope } from '../../shared/enum/deployment-scope.enum.js';
 
 export class DeploymentScopePrompt {
 	public async ask(
 		task: ListrTaskWrapper<
-			CreateTemplateCtx,
+			DeployTemplateCtx,
       typeof DefaultRenderer,
       typeof SimpleRenderer
 		>,

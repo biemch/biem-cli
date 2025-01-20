@@ -17,7 +17,7 @@ import { ConfigService } from '../core/service/config.service.js';
 import { DeploymentService } from '../core/service/deployment.service.js';
 import { TaskService } from '../core/service/task.service.js';
 import { ValidationService } from '../core/service/validation.service.js';
-import { CreateTemplateCtx } from '../shared/ctx/create-template.ctx.js';
+import { DeployTemplateCtx } from '../shared/ctx/deploy-template.ctx.js';
 import { DeploymentScope } from '../shared/enum/deployment-scope.enum.js';
 import { DeploymentType } from '../shared/enum/deployment-type.enum.js';
 import { handleError } from '../shared/lib/util/error.util.js';
@@ -153,7 +153,7 @@ program
 			/**
 			 * configuration
 			 */
-			const configurationTaskList = new Listr<CreateTemplateCtx>([
+			const configurationTaskList = new Listr<DeployTemplateCtx>([
 				{
 					title: 'Configuration',
 					task: async (ctx, task): Promise<Listr> => task.newListr([

@@ -4,7 +4,7 @@ import { Organization } from '../model/organization.model.js';
 import { Template } from '../model/template.model.js';
 import { Workspace } from '../model/workspace.model.js';
 
-export interface CreateTemplateCtx {
+export interface DeployTemplateCtx {
 	deploymentScope: DeploymentScope;
 	organizationId?: Organization['id'];
 	workspaceId?: Workspace['id'];

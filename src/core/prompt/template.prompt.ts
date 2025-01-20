@@ -6,7 +6,7 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
+import { DeployTemplateCtx } from '../../shared/ctx/deploy-template.ctx.js';
 import { Template } from '../../shared/model/template.model.js';
 import { TemplateApiService } from '../service/api/template.api.service.js';
 
@@ -19,7 +19,7 @@ export class TemplatePrompt {
 
 	public async ask(
 		task: ListrTaskWrapper<
-			CreateTemplateCtx,
+			DeployTemplateCtx,
       typeof DefaultRenderer,
       typeof SimpleRenderer
 		>,
