@@ -36,6 +36,7 @@ export class InputPrompt {
 				return true;
 			}
 			: undefined;
+
 		return task.prompt(ListrInquirerPromptAdapter).run(input, {
 			message,
 			default: defaultValue,
