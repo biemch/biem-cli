@@ -1,3 +1,11 @@
+## 1.3.1 (2025-01-20)
+
+### Bug Fix
+
+- increase character limits for template create command inputs ([4d19ace](https://github.com/biemch/biem-cli/commit/4d19ace3c44af8ed87fa0465dce3cd12c56cca8d))
+- add missing line break in input prompt handling ([44232f9](https://github.com/biemch/biem-cli/commit/44232f91f5fddd792fd368607142a9b6ca845048))
+- add slugify option to input prompt validation ([8838d46](https://github.com/biemch/biem-cli/commit/8838d4635f668b8fa659bd7285dd39a27347f71a))
+
 ## 1.3.0 (2025-01-20)
 
 ### Feature
