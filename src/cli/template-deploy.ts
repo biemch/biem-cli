@@ -2,22 +2,22 @@ import { Command } from 'commander';
 import { Listr } from 'listr2';
 
 import { rendererOptions } from '../core/config/render-options.config.js';
-import { DeploymentScopePrompt } from '../core/prompt/deployment-scope.prompt.js';
-import { DeploymentTypePrompt } from '../core/prompt/deployment-type.prompt.js';
-import { OrganizationPrompt } from '../core/prompt/organization.prompt.js';
-import { TemplatePrompt } from '../core/prompt/template.prompt.js';
-import { WorkspacePrompt } from '../core/prompt/workspace.prompt.js';
-import { ApiService } from '../core/service/api/api.service.js';
-import { AuthService } from '../core/service/api/auth.service.js';
-import { FileService } from '../core/service/api/file.service.js';
-import { OrganizationService } from '../core/service/api/organization.service.js';
-import { TemplateService } from '../core/service/api/template.service.js';
-import { WorkspaceService } from '../core/service/api/workspace.service.js';
+import { DeploymentScopePrompt } from '../core/prompt/deploy/deployment-scope.prompt.js';
+import { DeploymentTypePrompt } from '../core/prompt/deploy/deployment-type.prompt.js';
+import { OrganizationPrompt } from '../core/prompt/deploy/organization.prompt.js';
+import { TemplatePrompt } from '../core/prompt/deploy/template.prompt.js';
+import { WorkspacePrompt } from '../core/prompt/deploy/workspace.prompt.js';
+import { AuthApiService } from '../core/service/api/auth.api.service.js';
+import { CoreApiService } from '../core/service/api/core.api.service.js';
+import { FileApiService } from '../core/service/api/file.api.service.js';
+import { OrganizationApiService } from '../core/service/api/organization.api.service.js';
+import { TemplateApiService } from '../core/service/api/template.api.service.js';
+import { WorkspaceApiService } from '../core/service/api/workspace.api.service.js';
 import { ConfigService } from '../core/service/config.service.js';
 import { DeploymentService } from '../core/service/deployment.service.js';
 import { TaskService } from '../core/service/task.service.js';
 import { ValidationService } from '../core/service/validation.service.js';
-import { CreateTemplateCtx } from '../shared/ctx/create-template.ctx.js';
+import { DeployTemplateCtx } from '../shared/ctx/deploy-template.ctx.js';
 import { DeploymentScope } from '../shared/enum/deployment-scope.enum.js';
 import { DeploymentType } from '../shared/enum/deployment-type.enum.js';
 import { handleError } from '../shared/lib/util/error.util.js';
@@ -42,18 +42,6 @@ program
 			const taskService = new TaskService();
 			const configService = new ConfigService(directory);
 			const validationService = new ValidationService();
-			const apiService = new ApiService(configService.env.URL);
-			const authService = new AuthService(apiService);
-			const deploymentScopePrompt = new DeploymentScopePrompt();
-			const organizationService = new OrganizationService(apiService);
-			const organizationPrompt = new OrganizationPrompt(organizationService);
-			const workspaceService = new WorkspaceService(apiService);
-			const workspacePrompt = new WorkspacePrompt(workspaceService);
-			const deploymentTypePrompt = new DeploymentTypePrompt();
-			const templateService = new TemplateService(apiService);
-			const templatePrompt = new TemplatePrompt(templateService);
-			const fileService = new FileService(apiService);
-			const deploymentService = new DeploymentService(configService, templateService, fileService);
 
 			/**
 			 * validation
@@ -120,6 +108,22 @@ program
 			await validationTaskList.run();
 
 			/**
+			 * service initialization
+			 */
+			const coreApiService = new CoreApiService(configService.env.URL);
+			const authApiService = new AuthApiService(coreApiService);
+			const deploymentScopePrompt = new DeploymentScopePrompt();
+			const organizationApiService = new OrganizationApiService(coreApiService);
+			const organizationPrompt = new OrganizationPrompt(organizationApiService);
+			const workspaceApiService = new WorkspaceApiService(coreApiService);
+			const workspacePrompt = new WorkspacePrompt(workspaceApiService);
+			const deploymentTypePrompt = new DeploymentTypePrompt();
+			const templateApiService = new TemplateApiService(coreApiService);
+			const templatePrompt = new TemplatePrompt(templateApiService);
+			const fileApiService = new FileApiService(coreApiService);
+			const deploymentService = new DeploymentService(configService, templateApiService, fileApiService);
+
+			/**
 			 * authentication
 			 */
 			const authenticationTaskList = new Listr([
@@ -130,7 +134,7 @@ program
 							title: 'Authenticating user',
 							task: async () => {
 								await taskService.run(
-									() => authService.login({
+									() => authApiService.login({
 										email: configService.env.EMAIL,
 										password: configService.env.PASSWORD,
 									}), 500,
@@ -149,7 +153,7 @@ program
 			/**
 			 * configuration
 			 */
-			const configurationTaskList = new Listr<CreateTemplateCtx>([
+			const configurationTaskList = new Listr<DeployTemplateCtx>([
 				{
 					title: 'Configuration',
 					task: async (ctx, task): Promise<Listr> => task.newListr([

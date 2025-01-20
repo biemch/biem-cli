@@ -8,11 +8,7 @@ import {
 	statSync,
 	writeFileSync,
 } from 'node:fs';
-import {
-	join,
-	resolve,
-} from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 
 export const getCurrentDirectory = () => {
 	return process.cwd();
@@ -20,14 +16,6 @@ export const getCurrentDirectory = () => {
 
 export const getHomeDirectory = () => {
 	return process.env.USERPROFILE || process.env.HOME;
-};
-
-export const getTemplateDirectory = () => {
-	return resolve(
-		fileURLToPath(import.meta.url),
-		'../../../..',
-		`template`,
-	);
 };
 
 export const pathExists = (path: string) => {

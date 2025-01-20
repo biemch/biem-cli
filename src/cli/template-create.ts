@@ -1,74 +1,13 @@
-import path from 'node:path';
-
-import { replacePlaceholders } from '@biem/template-utils';
-import {
-	input,
-	select,
-} from '@inquirer/prompts';
 import { Command } from 'commander';
-import ora from 'ora';
+import { Listr } from 'listr2';
 
-import {
-	copyFile,
-	ensureDirectoryExists,
-	getDirectoryContents,
-	getTemplateDirectory,
-	readFile,
-	writeFile,
-} from '../shared/lib/util/file.util.js';
-import { sleep } from '../shared/lib/util/sleep.util.js';
-
-const PLACEHOLDER_FILES = [
-	'package.json',
-	'biem.config.json',
-	'index.html',
-];
-
-const TEMPLATE_CHOICES = [
-	{
-		name: 'react-ts',
-		value: 'react-ts',
-		description: 'React + Typescript + TailwindCSS',
-	},
-];
-
-async function copyTemplateFiles(template: string, directory: string, placeholders: Record<string, string>) {
-	const output = directory.startsWith('/') ? directory : path.join(process.cwd(), directory);
-
-	ensureDirectoryExists(output);
-
-	const templateDirectory = getTemplateDirectory();
-	const directoryContents = getDirectoryContents(templateDirectory);
-
-	const logger = ora({
-		text: 'Preparing to copy template files ...',
-		color: 'yellow',
-	}).start();
-
-	await sleep(1000);
-
-	for (const filename of directoryContents) {
-		const relativePath = path.relative(templateDirectory, filename);
-		const destination = path.join(output, relativePath);
-
-		ensureDirectoryExists(path.dirname(destination));
-
-		logger.text = `Copying ${relativePath}`;
-
-		await sleep(250);
-
-		if (PLACEHOLDER_FILES.includes(path.basename(filename))) {
-			const template = readFile(filename);
-			const content = replacePlaceholders(template, placeholders);
-			writeFile(destination, content);
-		}
-		else {
-			copyFile(filename, destination);
-		}
-	}
-
-	logger.succeed('Project created successfully.');
-}
+import { InputPrompt } from '../core/prompt/base/input.prompt.js';
+import { PresetPrompt } from '../core/prompt/create/preset.prompt.js';
+import { VersionPrompt } from '../core/prompt/create/version.prompt.js';
+import { PresetService } from '../core/service/preset.service.js';
+import { TaskService } from '../core/service/task.service.js';
+import { CreateTemplateCtx } from '../shared/ctx/create-template.ctx.js';
+import { handleError } from '../shared/lib/util/error.util.js';
 
 const program = new Command();
 
@@ -76,84 +15,124 @@ program
 	.argument('directory', 'name of the directory')
 	.action(async (directory) => {
 		try {
-			const placeholders: Record<string, string> = {
-				name: 'react-ts',
-				version: '1.0.0',
-				description: 'React + Typescript + TailwindCSS',
-				author: '',
-				license: '',
-			};
+			const taskService = new TaskService();
+			const presetService = new PresetService();
+			const presetPrompt = new PresetPrompt(presetService);
+			const namePrompt = new InputPrompt();
+			const descriptionPrompt = new InputPrompt();
+			const versionPrompt = new VersionPrompt();
+			const authorPrompt = new InputPrompt();
+			const licensePrompt = new InputPrompt();
 
-			const template = await select({
-				message: 'Template:',
-				choices: TEMPLATE_CHOICES.map(choice => ({
-					name: `${choice.name} - ${choice.description}`,
-					value: choice.value,
-				})),
-			});
-
-			placeholders.name = await input({
-				message: 'Name:',
-				default: placeholders.name as string,
-				validate: (value) => {
-					if (value.trim().length === 0) return 'Project name cannot be empty';
-					// eslint-disable-next-line max-len
-					if (!/^[a-z0-9-_]+$/.test(value)) return 'Project name can only contain lowercase letters, numbers, hyphens and underscores';
-					return true;
-				},
-			});
-
-			placeholders.description = await input({
-				message: 'Description:',
-				default: placeholders.description,
-				validate: (value) => {
-					if (value.trim().length === 0) return 'Please provide a brief description of your project';
-					return true;
-				},
-			});
-
-			placeholders.version = await input({
-				message: 'Version:',
-				default: placeholders.version,
-				validate: (value) => {
-					if (!/^\d+\.\d+\.\d+$/.test(value)) return 'Version must be in semver format (e.g., 1.0.0)';
-					return true;
-				},
-			});
-
-			placeholders.author = await input({
-				message: 'Author:',
-				default: placeholders.author,
-				validate: (value) => {
-					if (value.trim().length === 0) return 'Please provide an author name';
-					return true;
-				},
-			});
-
-			placeholders.license = await select({
-				message: 'Choose a license:',
-				default: placeholders.license,
-				choices: [
-					{
-						name: 'MIT',
-						value: 'MIT',
+			const createTaskList = new Listr<CreateTemplateCtx>([
+				{
+					title: 'Preset',
+					task: async (ctx, task) => {
+						ctx.preset = await taskService.run(
+							() => presetPrompt.ask(task),
+						);
 					},
-					{
-						name: 'UNLICENSED',
-						value: 'UNLICENSED',
+				},
+				{
+					title: 'Configuration',
+					task: async (ctx, task): Promise<Listr> => task.newListr([
+						{
+							title: 'Template name',
+							task: async (ctx, task) => {
+								ctx.name = await taskService.run(
+									() => namePrompt.ask<CreateTemplateCtx>(
+										'Template name',
+										task,
+										ctx.preset.name,
+										3,
+										24,
+									),
+								);
+							},
+						},
+						{
+							title: 'Template description',
+							task: async (ctx, task) => {
+								ctx.description = await taskService.run(
+									() => descriptionPrompt.ask<CreateTemplateCtx>(
+										'Template description',
+										task,
+										ctx.preset.description,
+										3,
+										128,
+									),
+								);
+							},
+						},
+						{
+							title: 'Template version',
+							task: async (ctx, task) => {
+								ctx.version = await taskService.run(
+									() => versionPrompt.ask<CreateTemplateCtx>('Template version', task, '1.0.0'),
+								);
+							},
+						},
+						{
+							title: 'Template author',
+							task: async (ctx, task) => {
+								ctx.author = await taskService.run(
+									() => authorPrompt.ask<CreateTemplateCtx>(
+										'Template author',
+										task,
+										undefined,
+										3,
+										24,
+									),
+								);
+							},
+						},
+						{
+							title: 'Template license',
+							task: async (ctx, task) => {
+								ctx.license = await taskService.run(
+									() => licensePrompt.ask<CreateTemplateCtx>(
+										'Template license',
+										task,
+										'MIT',
+										3,
+										Number.MAX_SAFE_INTEGER,
+									),
+								);
+							},
+						},
+					]),
+				},
+				{
+					title: 'Generate',
+					task: async (ctx, task) => {
+						await taskService.run(
+							async () => {
+								presetService.on('copy', file => task.title = `Copying ${file}`);
+
+								await presetService.copyPresetFileList(
+									ctx.preset.id,
+									directory, {
+										name: ctx.name,
+										description: ctx.description,
+										version: ctx.version,
+										author: ctx.author,
+										license: ctx.license,
+									},
+								);
+
+								task.title = 'Generate';
+							},
+						);
 					},
-				],
-			});
+				},
+			]);
 
-			await copyTemplateFiles(template, directory, placeholders);
+			await createTaskList.run();
 
-			console.log('\nNext steps:');
-			console.log(`  1. cd ${directory}`);
-			console.log('  2. yarn install (or npm install)');
-			console.log('  3. yarn dev (or npm run dev)');
+			console.log('\nTemplate created successfully.');
 		}
-		catch (err) {
-			console.error(err instanceof Error ? err.message : String(err));
+		catch (error) {
+			handleError(error as unknown as Error);
 		}
 	})
 	.parse(process.argv);

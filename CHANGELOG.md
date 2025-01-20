@@ -1,3 +1,23 @@
+## 1.3.0 (2025-01-20)
+
+### Feature
+
+- enhance environment variable validation ([d001f52](https://github.com/biemch/biem-cli/commit/d001f52876c39fb35bdd185f113f2d4e3cea0a21))
+
+### Bug Fix
+
+- update preset import statements to remove file extensions ([b96fcc9](https://github.com/biemch/biem-cli/commit/b96fcc9266d44edcd3ba87a6f2ed3874b822f620))
+- rename template create context to template deploy context ([6c00143](https://github.com/biemch/biem-cli/commit/6c00143c4f682e753a7553468a3ba66b8cf863ba))
+- reorganize service initialization in template-deploy service ([0cd6e9d](https://github.com/biemch/biem-cli/commit/0cd6e9db014662bb01315a746f7d55de9a3cb4d4))
+- add missing template directory parameter ([7319ddd](https://github.com/biemch/biem-cli/commit/7319ddd418c00f283ef9713be662ae3a29a09920))
+
+### Refactor
+
+- improve template create command ([9daa689](https://github.com/biemch/biem-cli/commit/9daa689a6dbfbdcdf1ffd160a9b1fd5b8f5169b6))
+- update template images ([976efee](https://github.com/biemch/biem-cli/commit/976efee2bad75cadf8d904c1fb9eb1f4babd1c38))
+- improve error handling in config validation ([477e64d](https://github.com/biemch/biem-cli/commit/477e64dee8f98fcd6c550a51eef723d8dd25989b))
+- rename and reorganize API services for improved structure ([cc7baef](https://github.com/biemch/biem-cli/commit/cc7baef0941d9424be4c8628428cb5047f3740d0))
+
 ## 1.2.2 (2025-01-18)
 
 ### Feature

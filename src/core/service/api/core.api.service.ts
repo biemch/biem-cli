@@ -1,7 +1,7 @@
 import { ApiError } from '../../../shared/error/api.error.js';
 import { maskSensitiveData } from '../../../shared/lib/util/object.util.js';
 
-export class ApiService {
+export class CoreApiService {
 	#baseUrl: string;
 	#accessToken: string | null = null;
 

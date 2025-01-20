@@ -5,7 +5,7 @@ import { viteSingleFile } from 'vite-plugin-singlefile';
 import vitePluginSvgr from 'vite-plugin-svgr';
 
 import { template } from './biem.config.json';
-import { Values } from './src/types';
+import { Values } from './src/types.js';
 
 export default defineConfig({
 	plugins: [

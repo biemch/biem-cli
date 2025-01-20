@@ -1,14 +1,11 @@
-import { DeploymentScope } from '../enum/deployment-scope.enum.js';
-import { DeploymentType } from '../enum/deployment-type.enum.js';
-import { Organization } from '../model/organization.model.js';
+import { Preset } from '../model/preset.model.js';
 import { Template } from '../model/template.model.js';
-import { Workspace } from '../model/workspace.model.js';
 
 export interface CreateTemplateCtx {
-	deploymentScope: DeploymentScope;
-	organizationId?: Organization['id'];
-	workspaceId?: Workspace['id'];
-	deploymentType: DeploymentType;
-	templateId?: Template['id'];
-	coverId?: Template['coverId'];
+	preset: Preset;
+	name: Template['name'];
+	version: Template['version'];
+	description: Template['description'];
+	author: Template['author'];
+	license: Template['license'];
 }

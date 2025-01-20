@@ -6,25 +6,25 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { TemplateService } from '../../core/service/api/template.service.js';
-import { CreateTemplateCtx } from '../../shared/ctx/create-template.ctx.js';
-import { Template } from '../../shared/model/template.model.js';
+import { DeployTemplateCtx } from '../../../shared/ctx/deploy-template.ctx.js';
+import { Template } from '../../../shared/model/template.model.js';
+import { TemplateApiService } from '../../service/api/template.api.service.js';
 
 export class TemplatePrompt {
-	private templateService: TemplateService;
+	private templateApiService: TemplateApiService;
 
-	constructor(templateService: TemplateService) {
-		this.templateService = templateService;
+	constructor(templateApiService: TemplateApiService) {
+		this.templateApiService = templateApiService;
 	}
 
 	public async ask(
 		task: ListrTaskWrapper<
-			CreateTemplateCtx,
+			DeployTemplateCtx,
       typeof DefaultRenderer,
       typeof SimpleRenderer
 		>,
 	): Promise<Template['id']> {
-		const { bookingTemplateList } = await this.templateService.find();
+		const { bookingTemplateList } = await this.templateApiService.find();
 
 		return task.prompt(ListrInquirerPromptAdapter).run(select, {
 			message: 'Select template',
