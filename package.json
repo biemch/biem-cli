@@ -47,7 +47,7 @@
   },
   "repository": "biemch/biem-cli.git",
   "scripts": {
-    "build": "yarn clean && tsc && cpy \"src/template/**/*\" dist/template",
+    "build": "yarn clean && tsc && cpy \"src/preset/**/*\" dist/preset",
     "clean": "rimraf dist",
     "cli:install": "npm link",
     "cli:uninstall": "npm unlink -g",

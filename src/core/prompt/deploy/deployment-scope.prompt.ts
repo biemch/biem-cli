@@ -6,8 +6,8 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { DeployTemplateCtx } from '../../shared/ctx/deploy-template.ctx.js';
-import { DeploymentScope } from '../../shared/enum/deployment-scope.enum.js';
+import { DeployTemplateCtx } from '../../../shared/ctx/deploy-template.ctx.js';
+import { DeploymentScope } from '../../../shared/enum/deployment-scope.enum.js';
 
 export class DeploymentScopePrompt {
 	public async ask(

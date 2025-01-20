@@ -6,9 +6,9 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { DeployTemplateCtx } from '../../shared/ctx/deploy-template.ctx.js';
-import { Template } from '../../shared/model/template.model.js';
-import { TemplateApiService } from '../service/api/template.api.service.js';
+import { DeployTemplateCtx } from '../../../shared/ctx/deploy-template.ctx.js';
+import { Template } from '../../../shared/model/template.model.js';
+import { TemplateApiService } from '../../service/api/template.api.service.js';
 
 export class TemplatePrompt {
 	private templateApiService: TemplateApiService;

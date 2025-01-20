@@ -6,9 +6,9 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { DeployTemplateCtx } from '../../shared/ctx/deploy-template.ctx.js';
-import { Workspace } from '../../shared/model/workspace.model.js';
-import { WorkspaceApiService } from '../service/api/workspace.api.service.js';
+import { DeployTemplateCtx } from '../../../shared/ctx/deploy-template.ctx.js';
+import { Workspace } from '../../../shared/model/workspace.model.js';
+import { WorkspaceApiService } from '../../service/api/workspace.api.service.js';
 
 export class WorkspacePrompt {
 	private workspaceApiService: WorkspaceApiService;

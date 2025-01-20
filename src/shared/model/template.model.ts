@@ -3,8 +3,11 @@ import { z } from 'zod';
 export const TemplateSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	description: z.string().optional(),
-	markup: z.string().optional(),
+	description: z.string(),
+	version: z.string(),
+	author: z.string(),
+	license: z.string(),
+	markup: z.string(),
 	fieldList: z.array(
 		z.object({
 			name: z.string(),
@@ -23,7 +26,6 @@ export const TemplateSchema = z.object({
 	createdAt: z.string(),
 	updatedAt: z.string(),
 	deletedAt: z.string().optional(),
-	version: z.string().optional(),
 });
 
 export type Template = z.infer<typeof TemplateSchema>;

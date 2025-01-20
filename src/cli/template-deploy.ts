@@ -2,11 +2,11 @@ import { Command } from 'commander';
 import { Listr } from 'listr2';
 
 import { rendererOptions } from '../core/config/render-options.config.js';
-import { DeploymentScopePrompt } from '../core/prompt/deployment-scope.prompt.js';
-import { DeploymentTypePrompt } from '../core/prompt/deployment-type.prompt.js';
-import { OrganizationPrompt } from '../core/prompt/organization.prompt.js';
-import { TemplatePrompt } from '../core/prompt/template.prompt.js';
-import { WorkspacePrompt } from '../core/prompt/workspace.prompt.js';
+import { DeploymentScopePrompt } from '../core/prompt/deploy/deployment-scope.prompt.js';
+import { DeploymentTypePrompt } from '../core/prompt/deploy/deployment-type.prompt.js';
+import { OrganizationPrompt } from '../core/prompt/deploy/organization.prompt.js';
+import { TemplatePrompt } from '../core/prompt/deploy/template.prompt.js';
+import { WorkspacePrompt } from '../core/prompt/deploy/workspace.prompt.js';
 import { AuthApiService } from '../core/service/api/auth.api.service.js';
 import { CoreApiService } from '../core/service/api/core.api.service.js';
 import { FileApiService } from '../core/service/api/file.api.service.js';

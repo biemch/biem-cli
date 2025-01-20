@@ -6,8 +6,8 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { DeployTemplateCtx } from '../../shared/ctx/deploy-template.ctx.js';
-import { DeploymentType } from '../../shared/enum/deployment-type.enum.js';
+import { DeployTemplateCtx } from '../../../shared/ctx/deploy-template.ctx.js';
+import { DeploymentType } from '../../../shared/enum/deployment-type.enum.js';
 
 export class DeploymentTypePrompt {
 	public async ask(

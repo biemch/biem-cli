@@ -6,9 +6,9 @@ import {
 	SimpleRenderer,
 } from 'listr2';
 
-import { DeployTemplateCtx } from '../../shared/ctx/deploy-template.ctx.js';
-import { Organization } from '../../shared/model/organization.model.js';
-import { OrganizationApiService } from '../service/api/organization.api.service.js';
+import { DeployTemplateCtx } from '../../../shared/ctx/deploy-template.ctx.js';
+import { Organization } from '../../../shared/model/organization.model.js';
+import { OrganizationApiService } from '../../service/api/organization.api.service.js';
 
 export class OrganizationPrompt {
 	private organizationApiService: OrganizationApiService;
