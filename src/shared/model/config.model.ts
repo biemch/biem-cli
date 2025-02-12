@@ -16,7 +16,7 @@ export const ConfigSchema = z.object({
 			}),
 		),
 		defaults: z.record(
-			z.union([z.string(), z.number(), z.boolean()]),
+			z.union([z.string(), z.number(), z.boolean(), z.undefined(), z.null(), z.array(z.any()), z.object({})]),
 		),
 	}),
 });
