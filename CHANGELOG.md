@@ -1,3 +1,9 @@
+## 1.3.2 (2025-02-12)
+
+### Bug Fix
+
+- extend defaults schema to include undefined, null, array, and object types ([d83fc61](https://github.com/biemch/biem-cli/commit/d83fc61da775af84906a99e35d4224e3e9996f98))
+
 ## 1.3.1 (2025-01-20)
 
 ### Bug Fix
