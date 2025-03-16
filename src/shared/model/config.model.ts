@@ -6,6 +6,7 @@ export const ConfigSchema = z.object({
 	version: z.string().regex(/^\d+\.\d+\.\d+$/),
 	cover: z.string(),
 	template: z.object({
+		duration: z.string(),
 		fieldList: z.array(
 			z.object({
 				name: z.string(),

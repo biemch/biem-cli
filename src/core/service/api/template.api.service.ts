@@ -2,11 +2,11 @@ import { Template } from '../../../shared/model/template.model.js';
 import { CoreApiService } from './core.api.service.js';
 
 export type CreateTemplateRequestBodyDto = Pick<
-	Template, 'name' | 'description' | 'version' | 'markup' | 'workspaceId' | 'organizationId' | 'fieldList' | 'coverId'
+	Template, 'name' | 'description' | 'version' | 'markup' | 'duration' | 'workspaceId' | 'organizationId' | 'fieldList' | 'coverId'
 >;
 
 export type UpdateTemplateRequestBodyDto = Pick<
-	Template, 'name' | 'description' | 'version' | 'markup' | 'workspaceId' | 'organizationId' | 'fieldList' | 'coverId'
+	Template, 'name' | 'description' | 'version' | 'markup' | 'duration' | 'workspaceId' | 'organizationId' | 'fieldList' | 'coverId'
 >;
 
 export type GetTemplateResponseDto = {

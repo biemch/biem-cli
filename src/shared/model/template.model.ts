@@ -8,6 +8,7 @@ export const TemplateSchema = z.object({
 	author: z.string(),
 	license: z.string(),
 	markup: z.string(),
+	duration: z.string(),
 	fieldList: z.array(
 		z.object({
 			name: z.string(),

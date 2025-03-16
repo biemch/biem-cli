@@ -22,6 +22,7 @@ export class DeploymentService {
 			description: this.configService.config.description,
 			version: this.configService.config.version,
 			markup: this.configService.templateMarkup,
+			duration: this.configService.config.template.duration,
 			fieldList: this.configService.config.template.fieldList,
 			...(ctx.organizationId ? { organizationId: ctx.organizationId } : {}),
 			...(ctx.workspaceId ? { workspaceId: ctx.workspaceId } : {}),
