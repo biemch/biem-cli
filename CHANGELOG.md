@@ -1,3 +1,9 @@
+## 1.4.0 (2025-03-16)
+
+### Feature
+
+- add template duration config ([7299c42](https://github.com/biemch/biem-cli/commit/7299c42308ed362b8f2aa1559e0a18878bf8fcd0))
+
 ## 1.3.2 (2025-02-12)
 
 ### Bug Fix
